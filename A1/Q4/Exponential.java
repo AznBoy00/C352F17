@@ -18,14 +18,16 @@ public class Exponential {
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("out_exponential.txt"));
             
-            System.out.println("Running exponential tetranacciR() recursive method:");
-            pw.write("\nRunning exponential tetranacciR() recursive method:\n");
+            System.out.println("Running exponential tetranacciExponential() recursive method:");
+            pw.write("\nRunning exponential tetranacciExponential() recursive method:\n");
 
-            for (int i = 5; i <= 40; i+=5) {
-                System.out.println("Running tetranacci(" + i + "): ");
-                pw.write("Running tetranacci(" + i + "): ");
+            for (int i = 5; i <= 35; i+=5) {
+                System.out.println("Running tetranacciExponential(" + i + "): ");
+                pw.write("Running tetranacciExponential(" + i + "): ");
                 long startTime = System.nanoTime();
-                System.out.println(tetranacciR(i));
+                int result = tetranacciExponential(i);
+                System.out.println(result);
+                pw.write("\nTetranacci(" + i + "): " + result);
                 long endTime = System.nanoTime();
                 long totalTime = endTime - startTime;
                 System.out.println("Runtime: " + totalTime + "ns\n");
@@ -37,12 +39,12 @@ public class Exponential {
         }
     }
     
-    public static int tetranacciR(int x) {
+    public static int tetranacciExponential(int x) {
         if (x < 3)
             return 0;
         if (x == 3)
             return 1;
         else
-            return tetranacciR(x-1) + tetranacciR(x-2) + tetranacciR(x-3) + tetranacciR(x-4);
+            return tetranacciExponential(x-1) + tetranacciExponential(x-2) + tetranacciExponential(x-3) + tetranacciExponential(x-4);
     }
 }

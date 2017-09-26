@@ -18,14 +18,16 @@ public class Linear {
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("out_Linear.txt"));
             
-            System.out.println("Running exponential tetranacciR() recursive method:");
-            pw.write("\nRunning exponential tetranacciR() recursive method:\n");
+            System.out.println("Running exponential tetranacciLinear() recursive method:");
+            pw.write("\nRunning exponential tetranacciLinear() recursive method:\n");
 
-            for (int i = 5; i <= 40; i+=5) {
-                System.out.println("Running tetranacci(" + i + "): ");
-                pw.write("Running tetranacci(" + i + "): ");
+            for (int i = 5; i <= 35; i+=5) {
+                System.out.println("Running tetranacciLinear(" + i + "): ");
+                pw.write("Running tetranacciLinear(" + i + "): ");
                 long startTime = System.nanoTime();
-                System.out.println(tetranacciLinear(i, 0, 0, 0, 1));
+                int result = tetranacciLinear(i, 0, 0, 0, 1);
+                System.out.println(result);
+                pw.write("\nTetranacci(" + i + "): " + result);
                 long endTime = System.nanoTime();
                 long totalTime = endTime - startTime;
                 System.out.println("Runtime: " + totalTime + "ns\n");
