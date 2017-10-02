@@ -16,35 +16,37 @@ import java.io.PrintWriter;
 public class Linear {
     public static void main(String[] args) {
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("out_Linear.txt"));
+            PrintWriter pw = new PrintWriter(new FileOutputStream("out_exponential.txt"));// pw for out_exponential.txt
             
-            System.out.println("Running exponential tetranacciLinear() recursive method:");
-            pw.write("\nRunning exponential tetranacciLinear() recursive method:\n");
+            System.out.println("Running exponential tetranacciExponential() recursive method:");
+            pw.write("\nRunning exponential tetranacciExponential() recursive method:\n"); // print the following line to the txt
 
-            for (int i = 5; i <= 35; i+=5) {
-                System.out.println("Running tetranacciLinear(" + i + "): ");
-                pw.write("Running tetranacciLinear(" + i + "): ");
-                long startTime = System.nanoTime();
+            for (int i = 5; i <= 100; i+=5) { // will attempt to find the first 100 Tetranacci numbers
+                System.out.println("Running tetranacciExponential(" + i + "): ");
+                pw.write("Running tetranacciExponential(" + i + "): ");
+                long startTime = System.nanoTime();// tracks runtime in nanoseconds (start)
                 int result = tetranacciLinear(i, 0, 0, 0, 1);
                 System.out.println(result);
-                pw.write("\nTetranacci(" + i + "): " + result);
-                long endTime = System.nanoTime();
+                pw.write("\nTetranacci(" + i + "): " + result); //print the result after finding it
+                long endTime = System.nanoTime();// tracks runtime in nanoseconds (end)
                 long totalTime = endTime - startTime;
                 System.out.println("Runtime: " + totalTime + "ns\n");
-                pw.write("\nRuntime: " + totalTime + "ns\n");
+                pw.write("\nRuntime: " + totalTime + "ns\n"); //prints the time on the txt file
             }
             pw.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) { // Catch file not found exception to prevent errors.
             System.out.println("File not found.");
         }
     }
-    
+    /*
+        Algorithm to find the tetranacci numbers in a linear recursive fashion by inputing x amount of numbers with a, b, c, d to be 0,0,0,1 respectively in order to obtain the proper algorithm result.
+    */
     public static int tetranacciLinear(int x, int a, int b, int c, int d) {
-        if (x < 3)
+        if (x < 3) //Base case 1
             return 0;
-        if (x == 3)
+        if (x == 3) // Base case 2
             return d;
         else
-            return tetranacciLinear(x - 1, b, c, d, a + b + c + d);
+            return tetranacciLinear(x - 1, b, c, d, a + b + c + d); // recursive case
     }
 }
