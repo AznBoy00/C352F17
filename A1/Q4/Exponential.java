@@ -25,7 +25,7 @@ public class Exponential {
             System.out.println("Running exponential tetranacciExponential() recursive method:");
             pw.write("\nRunning exponential tetranacciExponential() recursive method:\n"); // print the following line to the txt
 
-            for (int i = 5; i <= 100; i+=5) { // will attempt to find the first 100 Tetranacci numbers
+            for (int i = 5; i <= 30; i+=5) { // will attempt to find the first 100 Tetranacci numbers
                 System.out.println("Running tetranacciExponential(" + i + "): ");
                 pw.write("Running tetranacciExponential(" + i + "): ");
                 long startTime = System.nanoTime();// tracks runtime in nanoseconds (start)
