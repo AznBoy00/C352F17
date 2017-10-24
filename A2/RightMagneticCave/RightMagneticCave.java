@@ -32,11 +32,11 @@ public class RightMagneticCave {
         int r[];
         int s[];
         int t[];
-        System.out.println(checkRecursiveSolution(0, c));
+        System.out.println(recursiveRMC(0, c));
         //linkedListRMC(array);
     }
     
-    public static void recursiveRMC(int pos, int arr[]) {
+    public static void test(int pos, int arr[]) {
         Scanner sc = new Scanner(System.in);
         int i;
         int movable;
@@ -97,7 +97,7 @@ public class RightMagneticCave {
         }
     }
     
-    public static boolean checkRecursiveSolution(int pos, int arr[]) {
+    public static boolean recursiveRMC(int pos, int arr[]) {
         int movable;
         // Define how many positions you can move to the left of right.
         if (arr[pos] % 2 == 0) {
@@ -116,10 +116,10 @@ public class RightMagneticCave {
         }
         if (pos - movable < 0) {
             iterationNumber++;
-            return checkRecursiveSolution(pos + movable, arr);
+            return recursiveRMC(pos + movable, arr);
         } else {
             iterationNumber++;
-            return checkRecursiveSolution(pos - movable, arr);
+            return recursiveRMC(pos - movable, arr);
         }
     }
     
