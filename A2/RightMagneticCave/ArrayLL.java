@@ -22,6 +22,31 @@ public class ArrayLL {
             next = n;
             previous = p;
         }
+        
+        public void setX(int y) {
+                value = y;		
+        }
+
+        public void setNext(Node xt) {
+                next = xt;
+        }
+
+        public void setPrevious(Node pr) {
+                previous = pr;
+        }
+
+        public int getValue() {
+                return value;	
+        }
+
+
+        public Node getNext() {
+                return next;
+        }
+
+        public Node getPrevious() {
+                return previous;
+        }
     }
     
     private Node head;
@@ -36,6 +61,22 @@ public class ArrayLL {
     
     public int getSize() {
             return size;
+    }
+
+    public Node getHead() {
+        return head;
+    }
+
+    public void setHead(Node head) {
+        this.head = head;
+    }
+
+    public Node getTail() {
+        return tail;
+    }
+
+    public void setTail(Node tail) {
+        this.tail = tail;
     }
     
     public int getItemAt(int index) {
@@ -52,7 +93,7 @@ public class ArrayLL {
         return temp.value;
     }
     
-    public void append(int v) {
+    public void addToList(int v) {
 	if (head == null) {
             Node temp = new Node(v, null, null);
             head = temp;
@@ -80,6 +121,6 @@ public class ArrayLL {
             System.out.print("" + temp.value  + ", ");
             temp = temp.next;		
         }
-            System.out.println("" + temp.value  + ".");
-	}
+        System.out.println("" + temp.value  + ".");
+    }
 }
