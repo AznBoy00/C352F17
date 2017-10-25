@@ -115,7 +115,7 @@ public class ArrayLL {
             System.out.println("There is nothing to display; list is empty." );
             return;
         }	
-        System.out.println("List size is: " + size + ". The content it: ");
+        System.out.println("List size is: " + size + ". The content is: ");
         Node temp = head;
         while(temp != tail) {
             System.out.print("" + temp.value  + ", ");

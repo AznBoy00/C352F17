@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.util.Scanner;
 /**
  *
  * @author Lin_K
@@ -34,6 +33,7 @@ public class RightMagneticCave {
         int[] t = {10, 2, 8, 2, 6, 2, 4, 2, 0};
         int[] u = {10,16,4,6,2,10,0};
         
+        System.out.println("Using Recursion");
         System.out.println(recursiveRMC(0, a));
         System.out.println(recursiveRMC(0, b));
         System.out.println(recursiveRMC(0, c));
@@ -55,29 +55,28 @@ public class RightMagneticCave {
         System.out.println(recursiveRMC(0, s));
         System.out.println(recursiveRMC(0, t));
         System.out.println(recursiveRMC(0, u));
-        System.out.println("asd");
-        System.out.println(linkedListRMC(a));
-        System.out.println(linkedListRMC(b));
-        System.out.println(linkedListRMC(c));
-        System.out.println(linkedListRMC(d));
-        System.out.println(linkedListRMC(e));
-        System.out.println(linkedListRMC(f));
-        System.out.println(linkedListRMC(g));
-        System.out.println(linkedListRMC(h));
-        System.out.println(linkedListRMC(i));
-        System.out.println(linkedListRMC(j));
-        System.out.println(linkedListRMC(k));
-        System.out.println(linkedListRMC(l));
-        System.out.println(linkedListRMC(m));
-        System.out.println(linkedListRMC(n));
-        System.out.println(linkedListRMC(o));
-        System.out.println(linkedListRMC(p));
-        System.out.println(linkedListRMC(q));
-        System.out.println(linkedListRMC(r));
-        System.out.println(linkedListRMC(s));
-        System.out.println(linkedListRMC(t));
-        System.out.println(linkedListRMC(u));
-        //linkedListRMC(array);
+        System.out.println("\n\n\nUsing LinkedList");
+        System.out.println(linkedListRMC(0, a));
+        System.out.println(linkedListRMC(0, b));
+        System.out.println(linkedListRMC(0, c));
+        System.out.println(linkedListRMC(0, d));
+        System.out.println(linkedListRMC(0, e));
+        System.out.println(linkedListRMC(0, f));
+        System.out.println(linkedListRMC(0, g));
+        System.out.println(linkedListRMC(0, h));
+        System.out.println(linkedListRMC(0, i));
+        System.out.println(linkedListRMC(0, j));
+        System.out.println(linkedListRMC(0, k));
+        System.out.println(linkedListRMC(0, l));
+        System.out.println(linkedListRMC(0, m));
+        System.out.println(linkedListRMC(0, n));
+        System.out.println(linkedListRMC(0, o));
+        System.out.println(linkedListRMC(0, p));
+        System.out.println(linkedListRMC(0, q));
+        System.out.println(linkedListRMC(0, r));
+        System.out.println(linkedListRMC(0, s));
+        System.out.println(linkedListRMC(0, t));
+        System.out.println(linkedListRMC(0, u));
     }
     
     public static boolean recursiveRMC(int pos, int arr[]) {
@@ -94,6 +93,11 @@ public class RightMagneticCave {
         }
         if (pos == arr.length - 1 && arr[pos] == 0) {
             iterationNumber = 0;
+            System.out.println("The array size is: " + arr.length + ". The content is: ");
+            for (int i = 0; i < arr.length; i++) {
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
             return true;
         }
         if (pos + movable > arr.length - 1 && pos - movable < 0) {
@@ -109,16 +113,15 @@ public class RightMagneticCave {
         }
     }
     
-    public static boolean linkedListRMC(int arr[]) {
+    public static boolean linkedListRMC(int pos, int arr[]) {
         ArrayLL list = new ArrayLL();
-        int pos = 0;
         int movable;
         
         for (int i = 0; i < arr.length; i++) {
             list.addToList(arr[i]);
         }
-        //list.showListContents();
-
+        list.showListContents();
+        
         do {
             if (iterationNumber >= 5 * list.getSize()) {
                 iterationNumber = 0;
