@@ -78,7 +78,7 @@ public class RightMagneticCave {
         System.out.println(linkedListRMC(0, t));
         System.out.println(linkedListRMC(0, u));
     }
-    
+    //Recursive method for RightMagneticCave
     public static boolean recursiveRMC(int pos, int arr[]) {
         int movable;
         // Define how many positions you can move to the left of right.
