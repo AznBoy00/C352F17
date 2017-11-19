@@ -1,0 +1,19 @@
+Creation and shuffling of Numbers Runtime: 67450665ns
+
+N = 10
+Sorting BSTree for N = 10 Runtime: 459979ns
+
+N = 10
+Sorting AVL for N = 10 Runtime: 28310ns
+
+N = 100
+Sorting BSTree for N = 100 Runtime: 176616ns
+
+N = 100
+Sorting AVL for N = 10 Runtime: 126228ns
+
+N = 10000
+Sorting BSTree for N = 10000 Runtime: 3134921ns
+
+N = 10000
+Sorting AVL for N = 10000 Runtime: 2679877ns

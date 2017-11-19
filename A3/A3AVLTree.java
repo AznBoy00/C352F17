@@ -97,7 +97,7 @@ public class A3AVLTree <E extends Comparable<E>> implements Tree<E> {
         Node<E> xLLeft = xLeft.getLeft();
         Node<E> xLRight = xLeft.getRight();
         x = new Node<E>(x.getContent(), xLRight, xRight);
-        xLeft = new Node<E>(xRight.getContent(), xLLeft, x);
+        xLeft = new Node<E>(xLeft.getContent(), xLLeft, x);
         return xLeft;
     }
 
