@@ -93,7 +93,7 @@ public class A3AVLTree <E extends Comparable<E>> implements Tree<E> {
     private Node<E> rotateRight(Node<E> node) {
         Node<E> x = node;
         Node<E> xLeft = x.getLeft();
-        Node<E> xRight = x.getRight(); 
+        Node<E> xRight = x.getRight();
         Node<E> xLLeft = xLeft.getLeft();
         Node<E> xLRight = xLeft.getRight();
         x = new Node<E>(x.getContent(), xLRight, xRight);
@@ -152,4 +152,13 @@ public class A3AVLTree <E extends Comparable<E>> implements Tree<E> {
         }
         return node.getHeight(node);
     }
+    
+    /*public static void main(String[] args) {
+        A3AVLTree t1 = new A3AVLTree();
+        t1.add(1);
+        t1.add(2);
+        t1.add(3);
+        t1.add(6);
+        t1.add(15);
+    }*/
 }

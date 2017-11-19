@@ -1,7 +1,7 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-public interface Tree<E extends Comparable<E>> {
+public interface Tree<E> {
 
     /**
      * Adds the specified element to this tree (duplicates are allowed)

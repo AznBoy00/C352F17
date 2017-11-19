@@ -1,11 +1,10 @@
-
 import java.util.Arrays;
 import java.util.Collections;
 
 public class SortTester {
 
     public static void main(String[] args) {
-        Tree<Number> tree = new A3BSTree<>();
+        Tree tree = new A3BSTree<>();
         Number a[] = new Number[10];
 
         for (int i = 0; i < a.length; i++) {

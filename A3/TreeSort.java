@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Iterator;
 
+
 public class TreeSort {
 
     /**
@@ -9,7 +10,7 @@ public class TreeSort {
      * @param a an array to sort
      */
     public static <E> void sort(E[] a) {
-        Tree<E> tree = new A3AVLTree<>();
+        Tree tree = new A3AVLTree<>();
         sort(tree, a);
     }
 
@@ -20,6 +21,8 @@ public class TreeSort {
      * @param a an array to sort
      */
     public static <E> void sort(Tree<E> tree, E[] a) {
-        //to do
+        for (int i = 0; i < a.length; i++) {
+            tree.add(a[i]);
+        }
     }
 }
