@@ -133,8 +133,5 @@ public class SortTester {
         System.out.printf("Sorted%n%s%n", Arrays.toString(a));
         System.out.printf("Sorted%n%s%n", Arrays.toString(b));
         System.out.printf("Sorted%n%s%n", Arrays.toString(c));
-        
-        
     }
-
 }

@@ -1,0 +1,26 @@
+N = 10
+BST	480394ns
+
+AVL	536887ns
+
+BST(rev-sorted)	9876ns
+
+AVL(rev-sorted)	38321ns
+
+N = 100
+BST	1037035ns
+
+AVL	673974ns
+
+BST(rev-sorted)	202666ns
+
+AVL(rev-sorted)	260740ns
+
+N = 10000
+BST	305805618ns
+
+AVL	7177467ns
+
+BST(rev-sorted)	2731056ns
+
+AVL(rev-sorted)	10488868ns
