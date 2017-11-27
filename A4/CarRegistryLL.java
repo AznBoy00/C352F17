@@ -13,17 +13,17 @@ import java.util.NoSuchElementException;
  */
 public class CarRegistryLL {
     private class Node {
-        private int value;
+        private String value;
         private Node next;
         private Node previous;
         
-        public Node(int x, Node n, Node p) {
+        public Node(String x, Node n, Node p) {
             value = x;
             next = n;
             previous = p;
         }
         
-        public void setX(int y) {
+        public void setX(String y) {
                 value = y;		
         }
 
@@ -35,7 +35,7 @@ public class CarRegistryLL {
                 previous = pr;
         }
 
-        public int getValue() {
+        public String getValue() {
                 return value;	
         }
 
@@ -79,7 +79,7 @@ public class CarRegistryLL {
         this.tail = tail;
     }
     
-    public int getItemAt(int index) {
+    public String getItemAt(int index) {
         if (index > size -1) {
                 System.out.println("ERROR: Index is out of range! Terminating program.");
                 throw new NoSuchElementException();
@@ -93,7 +93,7 @@ public class CarRegistryLL {
         return temp.value;
     }
     
-    public void addToList(int v) {
+    public void addToList(String v) {
 	if (head == null) {
             Node temp = new Node(v, null, null);
             head = temp;
