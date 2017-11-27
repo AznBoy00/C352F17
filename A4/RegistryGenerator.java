@@ -16,6 +16,14 @@ import java.util.Random;
  */
 public class RegistryGenerator {
     Registry registry;
+
+    public Registry getRegistry() {
+        return registry;
+    }
+
+    public void setRegistry(Registry registry) {
+        this.registry = registry;
+    }
     private static int elementCount = 0;
     private static int keyLength = 6;
     

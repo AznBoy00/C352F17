@@ -47,7 +47,5 @@ public class SmartAR {
         }
         
         registry = new RegistryGenerator(fis);
-        
-        
     }
 }
