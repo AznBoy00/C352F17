@@ -8,6 +8,7 @@
  * @author Lin_K
  */
 public interface Registry {
+    public String[] allKeys();
     public void add(String key, Car c); // add(key,value2): add an entry for the given key and value
     public void remove(String key); // remove(key): remove the entry for the given key
     public Car getValues(String key); // getValues(key): return the values of the given key

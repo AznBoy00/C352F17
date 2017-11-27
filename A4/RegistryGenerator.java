@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 
 /**
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class RegistryGenerator {
     Registry registry;
     private static int elementCount;
+    private static int keyLength = 6;
     
     public RegistryGenerator(String fis) {        
         try {
@@ -86,5 +88,62 @@ public class RegistryGenerator {
             }
         }
         br.close();
+    }
+    
+    private int setKeyLength(int length) {
+        if (length > 12 || length < 6) {
+            System.out.println("Key length input is invalid, please input a valid length between 6-12.");
+            return -1;
+        }
+        return length;
+    }
+    
+    private int getKeyLength() {
+        return keyLength;
+    }
+    
+    public String[] generate(int n) {
+        String[] keySequence = new String[n];
+        Random randomNum = new Random(); // Create random object
+        final int MIN_STRING_LENGTH = 6; // Minimum length of key to generate
+        final int MAX_STRING_LENGTH = 13; // Maximum length of key to generate - 1
+        setKeyLength(randomNum.nextInt(MAX_STRING_LENGTH - MIN_STRING_LENGTH) + MIN_STRING_LENGTH); // Assign a random length of key
+
+        String randomKey = generateHelper();
+
+        for (int i = 0; i < keySequence.length; i++) {
+            while (duplicate(randomKey)) {
+                randomKey = generateHelper();
+            }
+            keySequence[i] = randomKey;
+        }
+        return keySequence;
+    }
+
+    private String generateHelper() {
+        final String alphanumericSeq = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+        String randomKey = "";
+        Random randomNum = new Random(); // Create random object
+
+        for (int i = 0; i < getKeyLength(); i++) {
+            randomKey += alphanumericSeq.charAt(randomNum.nextInt(alphanumericSeq.length()));
+        }
+        return randomKey;
+    }
+
+    private boolean duplicate(String key) {
+        if (getThreshold() < 100 || getThreshold() > 500000) {
+            return sequence.duplicate(key);
+        } else {
+            AVLTree.InorderIterator it = avlTree.new InorderIterator();
+
+            while (it.hasNext()) {
+                if (it.equals(key)) {
+                    return true;
+                }
+                it.next();
+            }
+        }
+        return false;
     }
 }

@@ -323,7 +323,6 @@ public class AVLTree<E extends Comparable<E>> implements Registry, Iterable {
             System.out.print(root.getValue() + ", ");
             this.inOrder(root.getRight());
         }
-
     }
 
     /**
@@ -641,6 +640,33 @@ public class AVLTree<E extends Comparable<E>> implements Registry, Iterable {
             return answer;
         }
 
+    }
+    
+    /**
+     * return all keys as a sorted sequence (lexicographic order)
+     * @return all keys as a sorted sequence (lexicographic order)
+     */
+    @Override
+    public String[] allKeys() {
+        String[] sortedSequence = new String[size];
+        if (size == 0) {
+            System.out.println();
+            sortedSequence[0] = "There is nothing to display; list is empty.\n";
+        }
+        int index = 0;
+        Node temp = root;
+        while(temp.hasLeft()) {
+            sortedSequence[index] = temp.getValue();
+            temp = temp.getLeft();
+            index++;
+            if (temp.getLeft() == null && temp.getRight() != null) {
+                temp = temp.getParent().getLeft();
+                sortedSequence[index] = temp.getValue();
+                index++;
+            }
+        }
+        //NOT COMPLETE
+        return sortedSequence;
     }
 
 }

@@ -261,19 +261,23 @@ public class CarRegistryLL implements Registry {
     }
 
     /**
-     * Show content of list.
+     * return all keys as a sorted sequence (lexicographic order)
+     * @return all keys as a sorted sequence (lexicographic order)
      */
-    public void showListContents() {
+    @Override
+    public String[] allKeys() {
+        String[] sortedSequence = new String[size];
         if (size == 0) {
-            System.out.println("There is nothing to display; list is empty.");
-            return;
+            System.out.println();
+            sortedSequence[0] = "There is nothing to display; list is empty.\n";
         }
-        System.out.println("List size is: " + size + ". The content is: ");
+        int index = 0;
         Node temp = head;
         while (temp != tail) {
-            System.out.print("" + temp.value + ", ");
+            sortedSequence[index] = temp.getValue();
             temp = temp.next;
+            index++;
         }
-        System.out.println("" + temp.value + ".");
+        return sortedSequence;
     }
 }
