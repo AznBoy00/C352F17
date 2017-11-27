@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Stack;
@@ -538,6 +539,30 @@ public class AVLTree<E extends Comparable<E>> implements Registry, Iterable {
     abstract class AVLIterator implements Iterator<E> {
 
         Node<E> currentValue;
+
+        public Node<E> getCurrentValue() {
+            return currentValue;
+        }
+
+        public void setCurrentValue(Node<E> currentValue) {
+            this.currentValue = currentValue;
+        }
+
+        public AVLTree<E> getT() {
+            return t;
+        }
+
+        public void setT(AVLTree<E> t) {
+            this.t = t;
+        }
+
+        public int getDuplicateCounter() {
+            return duplicateCounter;
+        }
+
+        public void setDuplicateCounter(int duplicateCounter) {
+            this.duplicateCounter = duplicateCounter;
+        }
         AVLTree<E> t;
         int duplicateCounter = 0;
 
@@ -662,6 +687,31 @@ public class AVLTree<E extends Comparable<E>> implements Registry, Iterable {
             index++;
         }
         return sortedSequence;
+    }
+    
+    /**
+     * previousCars(key): returns a sequence (sorted in reverse chronological order) of cars(previously) registered with the given key (license plate).
+     * @param key
+     * @return sequence of sorted duplicated keys
+     */
+    @Override
+    public ArrayList<Car> previousCars(String key) {
+        ArrayList<Car> duplicatedCar = new ArrayList();
+        AVLTree.InorderIterator iterator = new AVLTree.InorderIterator();
+        if (size == 0) {
+            System.out.println("There is nothing to display; list is empty.");
+            return duplicatedCar;
+        }
+        int index = 0;
+        Car temp = (Car)iterator();
+        while(iterator.hasNext()) {
+            if (key.compareTo(temp.toString()) == 0) {
+                duplicatedCar.add(temp);
+            }
+            temp = (Car)iterator.next();
+            index++;
+        }
+        return duplicatedCar;
     }
 
 }

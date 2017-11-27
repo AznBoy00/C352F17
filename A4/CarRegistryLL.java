@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 /*
@@ -279,5 +280,29 @@ public class CarRegistryLL implements Registry {
             index++;
         }
         return sortedSequence;
+    }
+    
+    /**
+     * previousCars(key): returns a sequence (sorted in reverse chronological order) of cars(previously) registered with the given key (license plate).
+     * @param key
+     * @return sequence of sorted duplicated keys
+     */
+    @Override
+    public ArrayList<Car> previousCars(String key) {
+        ArrayList<Car> duplicatedCar = new ArrayList();
+        if (size == 0) {
+            System.out.println("There is nothing to display; list is empty.");
+            return duplicatedCar;
+        }
+        int index = 0;
+        Node temp = head;
+        while (temp != tail) {
+            if (key.compareTo(temp.getCar().getKey()) == 0) {
+                duplicatedCar.add(temp.getCar());
+            }
+            temp = temp.next;
+            index++;
+        }
+        return duplicatedCar;
     }
 }

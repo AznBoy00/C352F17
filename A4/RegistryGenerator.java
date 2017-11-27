@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class RegistryGenerator {
     Registry registry;
-    private static int elementCount;
+    private static int elementCount = 0;
     private static int keyLength = 6;
     
     public RegistryGenerator(String fis) {        
@@ -110,27 +110,27 @@ public class RegistryGenerator {
         String[] keySequence = new String[n];
         Random randomNum = new Random(); // Create random object
         final int MIN_STRING_LENGTH = 6; // Minimum length of key to generate
-        final int MAX_STRING_LENGTH = 13; // Maximum length of key to generate - 1
+        final int MAX_STRING_LENGTH = 12; // Maximum length of key to generate - 1
         setKeyLength(randomNum.nextInt(MAX_STRING_LENGTH - MIN_STRING_LENGTH) + MIN_STRING_LENGTH); // Assign a random length of key
 
-        String randomKey = generateHelper();
+        String randomKey = generateDo();
 
         for (int i = 0; i < keySequence.length; i++) {
             while (duplicate(randomKey)) {
-                randomKey = generateHelper();
+                randomKey = generateDo();
             }
             keySequence[i] = randomKey;
         }
         return keySequence;
     }
 
-    private String generateHelper() {
-        final String alphanumericSeq = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+    private String generateDo() {
+        final String generatableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
         String randomKey = "";
         Random randomNum = new Random(); // Create random object
 
         for (int i = 0; i < getKeyLength(); i++) {
-            randomKey += alphanumericSeq.charAt(randomNum.nextInt(alphanumericSeq.length()));
+            randomKey += generatableChars.charAt(randomNum.nextInt(generatableChars.length()));
         }
         return randomKey;
     }

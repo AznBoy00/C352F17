@@ -1,4 +1,7 @@
 
+import java.util.ArrayList;
+
+
 /**
  *COMP/SOEN Program
  *By: Kevin Lin, Concordia University, 40002383
@@ -14,5 +17,5 @@ public interface Registry {
     public Car getValues(String key); // getValues(key): return the values of the given key
     public String nextKey(String key); // nextKey(key): return the key for the successor of key
     public String prevKey(String key); // prevKey(key): return the key for the predecessor of key
-    //public Car[] previousCars(String key); // previousCars(key): returns a sequence (sorted in reverse chronological order) of cars(previously) registered with the given key (license plate).
+    public ArrayList<Car> previousCars(String key); // previousCars(key): returns a sequence (sorted in reverse chronological order) of cars(previously) registered with the given key (license plate).
 }
