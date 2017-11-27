@@ -5,13 +5,22 @@
  */
 public class Node<E extends Comparable<E>>{
 
-    private E value;
+    private String value;
     private int depth;
     private int height=0;
     private int count;
     private Node<E> parent;
     private Node<E> left;
     private Node<E> right;
+    private Car c;
+
+    public Car getCar() {
+        return c;
+    }
+
+    public void setCar(Car c) {
+        this.c = c;
+    }
 
     /**
      * Basic constructor. Everything is set to null
@@ -25,7 +34,7 @@ public class Node<E extends Comparable<E>>{
      * Value based constructor sets count to 1 (no duplicates)
      * @param value Sets the value of the node, must implement comparable.
      */
-    public Node(E value){
+    public Node(String value){
         this.value = value;
         this.left = null;
         this.right = null;
@@ -96,7 +105,7 @@ public class Node<E extends Comparable<E>>{
      *
      * @return Returns a generic type which implements comparable
      */
-    public E getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -104,7 +113,7 @@ public class Node<E extends Comparable<E>>{
      *
      * @param value Sets the value of a node to a generic type which implements comparable
      */
-    public void setValue(E value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

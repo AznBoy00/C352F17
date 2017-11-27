@@ -14,8 +14,8 @@ import java.io.IOException;
  * @author Lin_K
  */
 public class RegistryGenerator {
-    CarRegistryLL registryLL;
-    AVLTree registryAVL;
+    Registry registry;
+    private static int elementCount;
     
     public RegistryGenerator(String fis) {        
         try {
@@ -27,7 +27,7 @@ public class RegistryGenerator {
     }
     
     private void initializeData(String fis) throws IOException{
-        int elementCount = 0;
+        elementCount = 0;
         BufferedReader br = null;
         String s = "", lineContent = "";
         
@@ -44,32 +44,47 @@ public class RegistryGenerator {
             }
         }
         
-        if (elementCount > 500000) {
-            this.registryLL = new CarRegistryLL();
+        setThreshold(elementCount, fis);
+        
+        br.close();
+    }
+    
+    private void setThreshold(int threshold, String fis) throws IOException{
+        BufferedReader br = null;
+        String s = "", lineContent = "";
+        
+        try {
+            br = new BufferedReader(new FileReader(fis));
+        } catch (FileNotFoundException e) {
+            System.out.println("FileNotFoundException caught.\nProgram shutting down.");
+            System.exit(1);
+        }
+        
+        if (threshold > 500000) {
+            this.registry = new CarRegistryLL();
             while (lineContent != null) {
                 lineContent = br.readLine();
                 if (lineContent != null) {
-                    registryLL.addToList(lineContent);
+                    registry.add(lineContent, new Car(lineContent));
                 }
             }
-        } else if (elementCount > 100) {
-            this.registryAVL = new AVLTree();
+        } else if (threshold > 100) {
+            this.registry = new AVLTree();
             while (lineContent != null) {
                 lineContent = br.readLine();
                 if (lineContent != null) {
-                    registryAVL.add(lineContent);
+                    registry.add(lineContent, new Car(lineContent));
                 }
             }
         } else {
-            this.registryLL = new CarRegistryLL();
+            this.registry = new CarRegistryLL();
             while (lineContent != null) {
                 lineContent = br.readLine();
                 if (lineContent != null) {
-                    registryLL.addToList(lineContent);
+                    registry.add(lineContent, new Car(lineContent));
                 }
             }
         }
         br.close();
     }
-    
 }

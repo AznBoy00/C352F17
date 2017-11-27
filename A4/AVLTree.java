@@ -3,11 +3,20 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
+public class AVLTree<E extends Comparable<E>> implements Registry {
 
     private int treeHeight;
     private int size;
     private Node<E> root;
+    private Car c;
+
+    public Car getC() {
+        return c;
+    }
+
+    public void setC(Car c) {
+        this.c = c;
+    }
 
     /**
      * Default (only) constructor, sets all values to null or zero to be
@@ -23,11 +32,11 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
      * Adds the specified element to this tree (duplicates are allowed, and are
      * stored in a counter for that Node's value)
      *
-     * @param toAdd element to add
+     * @param key element to add
      */
-    public void add(E toAdd) {
-        Node<E> nToAdd = new Node<E>(toAdd);
-
+    @Override
+    public void add(String key, Car c) {
+        Node<E> nToAdd = new Node<E>(key);
         //If this is the first addition, replace the null root
         if (root == null) {
             this.setRoot(nToAdd);
@@ -37,7 +46,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
             if (toFind != null) {
                 toFind.setCount(toFind.getCount() + 1);
             } else {	//otherwise add a new node
-                Node<E> newNode = new Node<E>(toAdd);
+                Node<E> newNode = new Node<E>(key);
                 Node<E> correctParent = findCorrectParent(newNode, root);
 
                 newNode.setParent(correctParent);
@@ -58,6 +67,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
                 }
             }
         }
+        c = new Car(key);
         size++;
     }
 
@@ -87,26 +97,15 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
     }
 
     /**
-     * Adds all of the elements in the provided collection to the calling tree,
-     * duplicates are allowed
-     *
-     * @param c Collection containing the elements to be added
-     */
-    public void addAll(Collection<? extends E> c) {
-        for (E e : c) {
-            this.add(e);
-        }
-    }
-
-    /**
      * Removes the specified element from this set if it is present. (if more
      * than one is present, decrements the object's counter by one)
      *
-     * @param o object to remove
-     * @return the object removed, null if it was not founf in the tree
+     * @param key object to remove
+     * @return the object removed, null if it was not founeW in the tree
      */
-    public E remove(Object o) {
-        Node<E> toDel = new Node<E>((E) o);
+    @Override
+    public String remove(String key) {
+        Node<E> toDel = new Node<E>((String) key);
         Node<E> result = find(toDel, root);
         if (result == null) //item to delete not found in the tree
         {
@@ -128,7 +127,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
                 }
             } else if (result.getLeft() != null && result.getRight() != null) //It is an internal node with both children
             {
-                Node<E> toReplace = nextNode(result);	//The node to replace result
+                Node<E> toReplace = nextKey(result);	//The node to replace result
                 Node<E> tempParent = toReplace.getParent();
                 remove(toReplace.getValue());
                 if (!(toReplace.getCount() > 1)) {	//only restructure the tree if the toReplace deleted was the final count of that value
@@ -197,17 +196,19 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
         }
         return result.getValue();
     }
-
+    
     /**
      * Returns an iterator which iterates over the elements in this tree in
      * ascending order (inOrder traversal)
      *
      * @return the iterator described above
      */
+    /**
     @Override
     public Iterator<E> iterator() {
         return new AVLIterator(this);
     }
+    * **/
 
     /**
      * Returns the treeHeight of the tree. For a tree of one Node<E> returns 0
@@ -342,7 +343,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
      * @return the calling node's inOrder successor, or null if the calling node
      * is the final node
      */
-    public Node<E> nextNode(Node<E> root) {
+    public Node nextKey(Node root) {
 
         Node<E> temp = root.getRight(), next = new Node<E>();
 
@@ -374,7 +375,8 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
      * @return the calling node's inOrder successor, or null if the calling node
      * is the final node
      */
-    public Node<E> nextNode(String key) {
+    @Override
+    public Node nextKey(String key) {
         Node<E> toFind = find(key);
         Node<E> temp = root.getRight(), next = new Node<E>();
 
@@ -406,7 +408,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
      * @return the calling node's inOrder predecessor, or null if the calling
      * node is the first node
      */
-    public Node<E> prevNode(Node<E> root) {
+    public Node prevNode(Node root) {
 
         Node<E> temp = root.getLeft(), prev = new Node<E>();
 
@@ -438,7 +440,8 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
      * @return the calling node's inOrder predecessor, or null if the calling
      * node is the first node
      */
-    public Node<E> prevNode(String key) {
+    @Override
+    public Node prevKey(String key) {
         Node<E> root = find(key);
         Node<E> temp = root.getLeft(), prev = new Node<E>();
 
@@ -495,7 +498,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
      * @return the node that matches the above description, or null if there is
      * no such node
      */
-    public Node<E> find(E valueToFind) {
+    public Node find(String valueToFind) {
         Node<E> initial = this.root;
         Node<E> toAdd = new Node<E>(valueToFind);
         if (initial.getValue() == toAdd.getValue()) {
@@ -509,18 +512,26 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
         }
 
     }
-
+    
     /**
-     * This method encapsulates the other find method, so that the initial
-     * parameter is not needed
-     *
-     * @param toFind The key of the value to return if it exists
-     * @return The found value
+     * return the values of the given key
+     * @param valueToFind
+     * @return return the values of the given key
      */
-    public Node<E> find(String toFind) {
-        Node<E> value = new Node<>((E) toFind);
-        Node<E> found = find(value, root);
-        return found;
+    @Override
+    public Car getValues(String valueToFind) {
+        Node<E> initial = this.root;
+        Node<E> toAdd = new Node<E>(valueToFind);
+        if (initial.getValue() == toAdd.getValue()) {
+            return initial.getCar();
+        } else if (initial.compareTo(toAdd) < 0 && initial.hasRight()) {
+            return find(toAdd, initial.getRight()).getCar();
+        } else if (initial.compareTo(toAdd) > 0 && initial.hasLeft()) {
+            return find(toAdd, initial.getLeft()).getCar();
+        } else {
+            return null;
+        }
+
     }
 
     /**
@@ -534,7 +545,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
     /**
      * Inner class for the A3BSTree iterator
      */
-    private class AVLIterator implements Iterator<E> {
+    abstract class AVLIterator implements Iterator<E> {
 
         Node<E> currentValue;
         AVLTree<E> t;
@@ -555,7 +566,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
             if (currentValue == null && t.size() != 0) {
                 return true;
             }
-            Node<E> nextValue = t.nextNode(currentValue);
+            Node<E> nextValue = t.nextKey(currentValue);
             if (nextValue != null) {
                 return true;
             }
@@ -568,8 +579,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
          *
          * @return the next value from the iterator
          */
-        @Override
-        public E next() {
+        public String nextValue() {
 
             //if you're at the very beginning of the iterator's sequence
             if (currentValue == null) {
@@ -585,7 +595,7 @@ public class AVLTree<E extends Comparable<E>> implements Iterable<E> {
             }
 
             //If there are no more duplicates to be read out, go to the actual next node
-            Node<E> nextValue = t.nextNode(currentValue);
+            Node<E> nextValue = t.nextKey(currentValue);
             if (nextValue != null) {
                 currentValue = nextValue;
                 duplicateCounter = currentValue.getCount();
