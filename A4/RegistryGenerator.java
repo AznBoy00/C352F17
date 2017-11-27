@@ -90,6 +90,10 @@ public class RegistryGenerator {
         br.close();
     }
     
+    private int getThreshold(){
+        return elementCount;
+    }
+    
     private int setKeyLength(int length) {
         if (length > 12 || length < 6) {
             System.out.println("Key length input is invalid, please input a valid length between 6-12.");
@@ -132,18 +136,14 @@ public class RegistryGenerator {
     }
 
     private boolean duplicate(String key) {
-        if (getThreshold() < 100 || getThreshold() > 500000) {
-            return sequence.duplicate(key);
-        } else {
-            AVLTree.InorderIterator it = avlTree.new InorderIterator();
-
-            while (it.hasNext()) {
-                if (it.equals(key)) {
-                    return true;
-                }
-                it.next();
-            }
+        if (key.length() > 12 || key.length() < 6) {
+            System.out.println("Key entered is too long or too short. (Only strings between 6-12 is allowed.)");
+            return true;
         }
-        return false;
+        if (registry.getValues(key).getKey() == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

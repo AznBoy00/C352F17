@@ -649,23 +649,18 @@ public class AVLTree<E extends Comparable<E>> implements Registry, Iterable {
     @Override
     public String[] allKeys() {
         String[] sortedSequence = new String[size];
+        AVLTree.InorderIterator iterator = new AVLTree.InorderIterator();
         if (size == 0) {
             System.out.println();
             sortedSequence[0] = "There is nothing to display; list is empty.\n";
         }
         int index = 0;
-        Node temp = root;
-        while(temp.hasLeft()) {
-            sortedSequence[index] = temp.getValue();
-            temp = temp.getLeft();
+        String temp = iterator.toString();
+        while(iterator.hasNext()) {
+            sortedSequence[index] = iterator.toString();
+            temp = iterator.next().toString();
             index++;
-            if (temp.getLeft() == null && temp.getRight() != null) {
-                temp = temp.getParent().getLeft();
-                sortedSequence[index] = temp.getValue();
-                index++;
-            }
         }
-        //NOT COMPLETE
         return sortedSequence;
     }
 
