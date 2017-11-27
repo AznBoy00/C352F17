@@ -6,17 +6,17 @@ import java.util.NoSuchElementException;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Lin_K
  */
-public class CarRegistryLL implements Registry{
-    
+public class CarRegistryLL implements Registry {
+
     /**
      * Node class for LL
      */
     private class Node {
+
         private String value;
         private Node next;
         private Node previous;
@@ -29,56 +29,42 @@ public class CarRegistryLL implements Registry{
         public void setCar(Car c) {
             this.c = c;
         }
-        
+
         public Node(String x, Node n, Node p) {
             value = x;
             next = n;
             previous = p;
         }
-        
+
         public void setX(String y) {
-                value = y;		
+            value = y;
         }
 
         public void setNext(Node xt) {
-                next = xt;
+            next = xt;
         }
 
         public void setPrevious(Node pr) {
-                previous = pr;
+            previous = pr;
         }
 
         public String getValue() {
-                return value;	
+            return value;
         }
 
-
         public Node getNext() {
-                return next;
+            return next;
         }
 
         public Node getPrevious() {
-                return previous;
+            return previous;
         }
     }
-    
+
     private Node head;
     private Node tail;
     private int size;
-    private Car c;
 
-    /**
-     * Get/Set for Car object.
-     * @return Car
-     */
-    public Car getC() {
-        return c;
-    }
-
-    public void setC(Car c) {
-        this.c = c;
-    }
-    
     /**
      * Default Constructor
      */
@@ -87,9 +73,9 @@ public class CarRegistryLL implements Registry{
         tail = null;
         size = 0;
     }
-    
+
     public int getSize() {
-            return size;
+        return size;
     }
 
     public Node getHead() {
@@ -107,30 +93,32 @@ public class CarRegistryLL implements Registry{
     public void setTail(Node tail) {
         this.tail = tail;
     }
-    
+
     /**
      * getKey at an index
+     *
      * @param index
      * @return key of index
      */
     public String getKey(int index) {
-        if (index > size -1) {
-                System.out.println("ERROR: Index is out of range! Terminating program.");
-                throw new NoSuchElementException();
+        if (index > size - 1) {
+            System.out.println("ERROR: Index is out of range! Terminating program.");
+            throw new NoSuchElementException();
         }
         int i = 0;
         Node temp = head;
-        while(i != index) {
-                temp = temp.next;
-                i++;
+        while (i != index) {
+            temp = temp.next;
+            i++;
         }
         return temp.value;
     }
-    
+
     /**
      * Return Car object of the input key
+     *
      * @param key
-     * @return 
+     * @return
      */
     @Override
     public Car getValues(String key) {
@@ -139,75 +127,153 @@ public class CarRegistryLL implements Registry{
             return null;
         }
         Node temp = head;
-        while(key.compareTo(temp.getCar().getKey()) != 0) {
+        while (key.compareTo(temp.getCar().getKey()) != 0) {
             temp = temp.next;
         }
         return temp.getCar();
     }
-    
+
     /**
      * Default LL add()
+     *
      * @param v key
      */
     public void add(String v) {
-	if (head == null) {
+        if (head == null) {
             Node temp = new Node(v, null, null);
             head = temp;
             head.next = head;
             head.previous = head;
             tail = head;
         } else {
-            Node temp = new Node(v, head, tail);	
+            Node temp = new Node(v, head, tail);
             head.previous = temp;
             tail.next = temp;
             tail = temp;
             temp = null;
-	}
+        }
         size++;
     }
-    
+
     /**
      * add an entry for the given key and value
+     *
      * @param key Key
      * @param c Car
      */
     @Override
     public void add(String key, Car c) {
-	if (head == null) {
+        if (head == null) {
             Node temp = new Node(key, null, null);
             head = temp;
             head.next = head;
             head.previous = head;
             tail = head;
         } else {
-            Node temp = new Node(key, head, tail);	
+            Node temp = new Node(key, head, tail);
             head.previous = temp;
             tail.next = temp;
             tail = temp;
             temp = null;
-	}
+        }
         c = new Car(key);
         size++;
     }
-    
-    public String remove() {
-        return "";
+
+    /**
+     * remove the entry for the given key
+     * @return
+     */
+    @Override
+    public void remove(String key) {
+        int index;
+        if (key.length() > 12 || key.length() < 6) {
+            System.out.println("Key entered is too long or too short. (Only strings between 6-12 is allowed.)");
+        } else {
+            Node temp = head;
+            index  = 0;
+            while (key.compareTo(temp.getCar().getKey()) != 0) {
+                temp = temp.next;
+                index++;
+            }
+            if (index > size - 1) {
+                System.out.println("ERROR: Given index is out of range! Program will terminate. \n");
+                throw new NoSuchElementException();
+            }
+
+            // Handle the special cases when deletion on head or tail
+            if (index == 0) {
+                System.out.println("\nDeleting node with value " + head.getValue() + " from index # " + index + ".");
+                head = head.next;
+                head.previous = tail;
+                tail.next = head;
+            } else if (index == size - 1) {
+                System.out.println("\nDeleting node with value " + tail.getValue() + " from index # " + index + ".");
+                tail = tail.previous;
+                tail.next = head;
+                head.previous = tail;
+            } else {
+                // Now we are pointing at the node preceding index where deletion should take place
+                System.out.println("\nDeleting node with value " + temp.getValue() + " from index # " + index + ".");
+                temp.next = temp.next.next;
+                temp.next.previous = temp;
+            }
+            size--;
+        }
     }
-    
+
+    /**
+     * return the key for the successor of key
+     *
+     * @param key
+     * @return the key for the successor of key
+     */
+    @Override
+    public String nextKey(String key) {
+        if (key.length() > 12 || key.length() < 6) {
+            System.out.println("Key entered is too long or too short. (Only strings between 6-12 is allowed.)");
+            return null;
+        }
+        Node temp = head;
+        while (key.compareTo(temp.getCar().getKey()) != 0) {
+            temp = temp.next;
+        }
+        return temp.next.getValue();
+    }
+
+    /**
+     * return the key for the predecessor of key
+     *
+     * @param key
+     * @return the key for the predecessor of key
+     */
+    @Override
+    public String prevKey(String key) {
+        if (key.length() > 12 || key.length() < 6) {
+            System.out.println("Key entered is too long or too short. (Only strings between 6-12 is allowed.)");
+            return null;
+        }
+        Node temp = head;
+        while (key.compareTo(temp.getCar().getKey()) != 0) {
+            temp = temp.next;
+        }
+        return temp.previous.getValue();
+    }
+
     /**
      * Show content of list.
      */
     public void showListContents() {
         if (size == 0) {
-            System.out.println("There is nothing to display; list is empty." );
+            System.out.println("There is nothing to display; list is empty.");
             return;
-        }	
+        }
         System.out.println("List size is: " + size + ". The content is: ");
         Node temp = head;
-        while(temp != tail) {
-            System.out.print("" + temp.value  + ", ");
-            temp = temp.next;		
+        while (temp != tail) {
+            System.out.print("" + temp.value + ", ");
+            temp = temp.next;
         }
-        System.out.println("" + temp.value  + ".");
+        System.out.println("" + temp.value + ".");
     }
 }

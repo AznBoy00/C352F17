@@ -1,9 +1,9 @@
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
-public class AVLTree<E extends Comparable<E>> implements Registry {
+public class AVLTree<E extends Comparable<E>> implements Registry, Iterable {
 
     private int treeHeight;
     private int size;
@@ -104,16 +104,11 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
      * @return the object removed, null if it was not founeW in the tree
      */
     @Override
-    public String remove(String key) {
+    public void remove(String key) {
         Node<E> toDel = new Node<E>((String) key);
         Node<E> result = find(toDel, root);
-        if (result == null) //item to delete not found in the tree
-        {
-            return null;
-        } else if (result.getCount() > 1) //remove a duplicate, count of 1 indicates only 1 of that value in the tree (it has no duplicates)
-        {
+        if (result.getCount() > 1) {
             result.setCount(result.getCount() - 1);
-            return result.getValue();
         } else {
             boolean root = result.equals(getRoot());
             Node<E> parent = result.getParent();
@@ -192,23 +187,18 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
             if (toCheck != null) {
                 Restructure.restructure(toCheck, this);
             }
-
         }
-        return result.getValue();
     }
-    
+
     /**
-     * Returns an iterator which iterates over the elements in this tree in
-     * ascending order (inOrder traversal)
+     * Returns an iterator over the elements in this tree in ascending order
      *
      * @return the iterator described above
      */
-    /**
     @Override
     public Iterator<E> iterator() {
-        return new AVLIterator(this);
+        return (new InorderIterator());
     }
-    * **/
 
     /**
      * Returns the treeHeight of the tree. For a tree of one Node<E> returns 0
@@ -376,7 +366,7 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
      * is the final node
      */
     @Override
-    public Node nextKey(String key) {
+    public String nextKey(String key) {
         Node<E> toFind = find(key);
         Node<E> temp = root.getRight(), next = new Node<E>();
 
@@ -385,13 +375,13 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
                 next = temp;
                 temp = temp.getLeft();
             }
-            return next;
+            return next.getValue();
         } else {		//Otherwise, the next node will be above the node in the tree: travel up until the next node is a left child: it's parent is next. If you reach the root of the tree, your node was the final node
             next = root;
             temp = root.getParent();
             while (temp != null) {
                 if (temp.getLeft() == next) {
-                    return temp;
+                    return temp.getValue();
                 } else {
                     next = temp;
                     temp = temp.getParent();
@@ -441,7 +431,7 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
      * node is the first node
      */
     @Override
-    public Node prevKey(String key) {
+    public String prevKey(String key) {
         Node<E> root = find(key);
         Node<E> temp = root.getLeft(), prev = new Node<E>();
 
@@ -450,13 +440,13 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
                 prev = temp;
                 temp = temp.getRight();
             }
-            return prev;
+            return prev.getValue();
         } else {		//Otherwise, the previous node will be above the node in the tree: travel up until the next node is a right child: it's parent is the previous node. If you reach the root of the tree, your node was the first node
             prev = root;
             temp = root.getParent();
             while (temp != null) {
                 if (temp.getRight() == prev) {
-                    return temp;
+                    return temp.getValue();
                 } else {
                     prev = temp;
                     temp = temp.getParent();
@@ -512,9 +502,10 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
         }
 
     }
-    
+
     /**
      * return the values of the given key
+     *
      * @param valueToFind
      * @return return the values of the given key
      */
@@ -604,6 +595,50 @@ public class AVLTree<E extends Comparable<E>> implements Registry {
 
             //if you're trying to go past the end of the iterator's sequence
             throw new NoSuchElementException("Reached end of structure");
+        }
+
+    }
+
+    // an iterator, doesn't implement remove().
+    private class InorderIterator implements Iterator<E> {
+
+        private Stack<Node<E>> st = new Stack<>();
+
+        public InorderIterator() {
+            if (root != null) {
+                Node<E> current = root;
+                while (current != null) {
+                    st.push(current);
+                    current = current.getLeft();
+                }
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !st.isEmpty();
+        }
+
+        @Override
+        public E next() {
+            E answer = null;
+            if (!st.isEmpty()) {
+                Node<E> current = st.pop();
+                answer = (E) current.getValue();
+                if (current != null && current.getRight() != null) {
+                    current = current.getRight();
+                }
+                if (current != null && current.getValue() != answer) {
+                    st.push(current);
+                    current = st.pop();
+                    while (current != null) {
+                        st.push(current);
+                        current = current.getLeft();
+                    }
+                }
+            }
+
+            return answer;
         }
 
     }
